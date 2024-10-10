@@ -3,7 +3,7 @@ saldo = numero_saques = 0
 limite = 500
 extrato = []
 
-# Variável imutável
+# Constantes
 LIMITE_SAQUES = 3
         
 
@@ -17,13 +17,14 @@ def validacao():
 
 def depositar():
     global saldo
+    global extrato
+
     while True:
-        valor = float(input('Informe o valor do depósito: '))
+        valor = float(input('Informe o valor do depósito: ').replace(',', '.'))
 
         if valor > 0:
             saldo += valor
             extrato.append(f'Depósito de: R$ {valor:.2f}')
-            print(extrato)
         
         else:
             print('Não é possível depositar valores negativos.')
@@ -35,11 +36,12 @@ def depositar():
 def sacar():
     global saldo
     global limite
+    global extrato
     global numero_saques
     global LIMITE_SAQUES
 
     while True:
-        valor = float(input('Informe o valor do saque: '))
+        valor = float(input('Informe o valor do saque: ').replace(',', '.'))
 
         if (valor < limite) and (valor <saldo) and (numero_saques < LIMITE_SAQUES):
             saldo -= valor;
@@ -54,12 +56,17 @@ def sacar():
         
         elif numero_saques > LIMITE_SAQUES:
             print('Operação não permitida. Quantidade diária de saques excedida.')
-        print(extrato)
 
         opcao = validacao()
         if opcao == 2:
-            break
-          
+            break   
+
+def imprimir_extrato():
+    global extrato
+    for i in extrato:
+            print(i, end = '\n')
+    print(f'Saldo: R$ {saldo:.2f}')
+
 
 menu = """
 
@@ -77,7 +84,7 @@ while True:
     elif opcao == 2:
         sacar()
     elif opcao == 3:
-        extrato()
+        imprimir_extrato()
     elif opcao == 4:
         break
     else:
