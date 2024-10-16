@@ -1,3 +1,5 @@
+import datetime
+
 # Variáveis globais
 saldo = numero_saques = transacoes = 0
 limite = 500
@@ -35,7 +37,7 @@ def depositar():
             if (valor > 0):
                 saldo += valor
                 transacoes += 1
-                extrato.append(f'Depósito de: R$ {valor:.2f}')
+                extrato.append(f"Depósito de R$ {valor:.2f} em {datetime.datetime.now().strftime('%d/%m/%Y %H: %M')}")
             
             elif (valor < 0):
                 print('Não é possível depositar valores negativos.')
@@ -64,7 +66,7 @@ def sacar():
             if (valor < limite) and (valor <saldo) and (numero_saques < LIMITE_SAQUES):
                 saldo -= valor;
                 transacoes += 1
-                extrato.append(f'Saque: R$ {valor:.2f}')
+                extrato.append(f"Saque de R$ {valor:.2f} em {datetime.datetime.now().strftime('%d/%m/%Y %H: %M')}")
                 numero_saques += 1
             
             elif valor > limite:
@@ -90,7 +92,7 @@ def imprimirExtrato():
     if (transacoes < LIMITE_TRANSACOES):
         for i in extrato:
             print(i, end = '\n')
-        print(f'Saldo: R$ {saldo:.2f}')
+        print(f"Saldo de R$ {saldo:.2f} em {datetime.datetime.now().strftime('%d/%m/%Y %H: %M')}")
         transacoes += 1
     else:
         return
